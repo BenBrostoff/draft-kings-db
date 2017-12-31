@@ -2,3 +2,4 @@
 .deploy.sh
 .DS_Store
 *.pyc
+dist/
