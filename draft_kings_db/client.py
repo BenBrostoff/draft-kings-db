@@ -5,6 +5,7 @@ from draft_kings_db import models, db_data
 
 class DraftKingsHistory(object):
     def __init__(self, db_url='sqlite:///:memory:', verbose=False):
+        self.most_recent_data = None
         if verbose:
             self.verbose = True
         else:
@@ -19,7 +20,11 @@ class DraftKingsHistory(object):
         self.session.close()
 
     def initialize_nba(self):
-        db_data.retrieve_data(self.session, self.verbose)
+        self.most_recent_data = db_data.retrieve_data(self.session, self.verbose)
+        print('Retrieved data from {} to {}'.format(
+            db_data.DB_START,
+            self.most_recent_data,
+        ))
 
     def lookup_nba_performances(self, name, limit=5):
         return (

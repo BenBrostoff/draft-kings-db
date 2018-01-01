@@ -11,11 +11,15 @@ def retrieve_data(session, verbose):
     today = datetime.today()
     row_holder = []
     date_counter = DB_START
+
+    most_recent_data = None
+
     while date_counter < today:
         try:
             row_holder += _parse_rows_from_csv(date_counter)
             if verbose:
                 print('Retrieved data for {}'.format(date_counter))
+            most_recent_data = date_counter
         except Exception as e:
             # FIXME - inefficient and will let legitimate errors fall through.
             # Not all days have NBA games
@@ -58,6 +62,7 @@ def retrieve_data(session, verbose):
         session.add(g)
 
     session.commit()
+    return most_recent_data
 
 
 def _parse_rows_from_csv(game_date):
