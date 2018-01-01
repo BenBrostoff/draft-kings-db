@@ -1,3 +1,11 @@
+## Setup
+
+```bash
+pip install draft_kings_db
+```
+
+## Example
+
 Example:
 
 ```python
