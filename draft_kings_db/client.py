@@ -1,4 +1,4 @@
-from sqlalchemy import create_engine
+from sqlalchemy import create_engine, desc
 from sqlalchemy.orm import sessionmaker
 from draft_kings_db import models, db_data
 
@@ -31,6 +31,7 @@ class DraftKingsHistory(object):
             self.session
                 .query(models.NBAPerformance)
                 .filter(models.NBAPerformance.name == name)
+                .order_by(desc(models.NBAPerformance.date))
                 .limit(limit)
                 .all()
         )

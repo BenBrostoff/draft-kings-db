@@ -68,7 +68,7 @@ def retrieve_data(session, verbose):
 def _parse_rows_from_csv(game_date):
     download = requests.get(S3_DATA_URL.format(
         game_date.year,
-        game_date.month,
+        '{}{}'.format('0' if game_date.month < 10 else '', game_date.month),
         '{}{}'.format('0' if game_date.day < 10 else '', game_date.day)
     ))
     if download.status_code != 200:
