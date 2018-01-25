@@ -27,6 +27,14 @@ class DraftKingsHistory(object):
         ))
 
     def lookup_nba_performances(self, name, limit=5):
+        if limit is None:
+            return (
+                self.session
+                    .query(models.NBAPerformance)
+                    .filter(models.NBAPerformance.name == name)
+                    .order_by(desc(models.NBAPerformance.date))
+                    .all()
+            )
         return (
             self.session
                 .query(models.NBAPerformance)
