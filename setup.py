@@ -2,7 +2,7 @@ from distutils.core import setup
 
 setup(
     name='draft_kings_db',
-    version='0.1.0',
+    version='0.1.1',
     packages=['draft_kings_db'],
     url='',
     license='MIT',
