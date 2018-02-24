@@ -10,6 +10,7 @@ class NBAPerformance(Base):
     id = Column(Integer, primary_key=True)
 
     name = Column(String(255))
+    position = Column(String(255))
     team = Column(String(255))
     matchup = Column(String(255))
     date = Column(Date)

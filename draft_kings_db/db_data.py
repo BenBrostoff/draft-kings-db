@@ -1,20 +1,20 @@
 import csv
-from datetime import datetime, timedelta
+from datetime import timedelta, date
 import requests
 from draft_kings_db.models import NBAPerformance
 
-DB_START = datetime(2017, 12, 23)
+DB_START = date(2017, 12, 23)
 S3_DATA_URL = 'https://s3.amazonaws.com/draftkings-fun/FULL_RESULTS_{}{}{}.csv'
 
 
-def retrieve_data(session, verbose):
-    today = datetime.today()
+def retrieve_data(session, verbose, from_date=None, to_date=None):
+    today = date.today()
     row_holder = []
-    date_counter = DB_START
+    date_counter = from_date or DB_START
 
     most_recent_data = None
 
-    while date_counter < today:
+    while (from_date or date.min) <= date_counter <= (to_date or today):
         try:
             row_holder += _parse_rows_from_csv(date_counter)
             if verbose:
@@ -46,6 +46,8 @@ def retrieve_data(session, verbose):
 
         g = NBAPerformance(
             name=row['Name'],
+            # Position tracking began 2-24-18
+            position=row.get('Position', ''),
             date=row['GameDate'],
             salary=float(row['Salary']),
             team=row['Team'],
